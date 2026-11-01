@@ -1,17 +1,20 @@
+
 import { lazy, Suspense } from 'react';
 import { Routes, Route, NavLink, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext.jsx';
-import Home from './pages/Home.jsx';
-import Events from './pages/Events.jsx';
-import Auth from './pages/Auth.jsx';
-import Feedback from './pages/Feedback.jsx';
-import MyEvents from './pages/MyEvents.jsx';
 
-const Gallery = lazy(() => import('./pages/Gallery.jsx')); // loaded only when /gallery is opened
+// Lazy load pages
+const Home = lazy(() => import('./pages/Home.jsx'));
+const Events = lazy(() => import('./pages/Events.jsx'));
+const Auth = lazy(() => import('./pages/Auth.jsx'));
+const Feedback = lazy(() => import('./pages/Feedback.jsx'));
+const MyEvents = lazy(() => import('./pages/MyEvents.jsx'));
+const Gallery = lazy(() => import('./pages/Gallery.jsx'));
 
 export default function App() {
   const { user, logout } = useAuth();
   const nav = useNavigate();
+
   return (
     <>
       <header className="bar">
@@ -20,10 +23,16 @@ export default function App() {
           <NavLink to="/events">Events</NavLink>
           <NavLink to="/gallery">Gallery</NavLink>
           <NavLink to="/feedback">Feedback</NavLink>
+
           {user ? (
             <>
               <NavLink to="/my-events">My events</NavLink>
-              <button className="link" onClick={async () => { await logout(); nav('/'); }}>Log out ({user.name.split(' ')[0]})</button>
+              <button className="link" onClick={async () => {
+                await logout();
+                nav('/');
+              }}>
+                Log out ({user.name.split(' ')[0]})
+              </button>
             </>
           ) : (
             <>
@@ -33,8 +42,9 @@ export default function App() {
           )}
         </nav>
       </header>
+
       <main>
-        <Suspense fallback={<p className="note">Loading gallery…</p>}>
+        <Suspense fallback={<p className="note">Loading page...</p>}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/events" element={<Events />} />
@@ -47,7 +57,10 @@ export default function App() {
           </Routes>
         </Suspense>
       </main>
-      <footer className="foot">TechFest 2026 Portal · Web Technology Laboratory project</footer>
+
+      <footer className="foot">
+        TechFest 2026 Portal · Web Technology Laboratory project
+      </footer>
     </>
   );
 }
