@@ -70,3 +70,4 @@ Lazy loading: Gallery route (`React.lazy`) and `loading="lazy"` images. `npm run
 ## 7. Report checklist
 Architecture: React (Netlify) -> Express API (Render) -> MongoDB Atlas. Add 3 URLs, before/after screenshots, git graph, green CI, Lighthouse before/after, mobile + 2 browsers screenshots.
 Feature branch testing - Feedback module
+Welcome to TechFest Portal - Version A
